@@ -11,6 +11,9 @@ export interface Project {
   approach: string
   deliverables: string[]
   cover: string
+  /** client logo shown top-left on the cover card */
+  logo?: string
+  coverPosition?: string
   /** Behance-style full-width slides: [src, width, height] */
   slides: [string, number, number][]
   principle: string
@@ -102,7 +105,9 @@ export const projects: Project[] = [
     approach:
       'I designed the core purchase and profile flows and the visual language that holds them together: colour proportions, type, 3D key visuals and reusable components. Product brands keep their identity, while every screen follows the same calm structure, so a new lottery drops in without redesign.',
     deliverables: ['Purchase flow', 'Profile & payments', 'Components', 'Key visuals', 'Brandbook'],
-    cover: './work/nlux/cover.webp',
+    cover: './work/nlux/cover-art.webp',
+    logo: './logos/national-lottery.svg',
+    coverPosition: '50% 60%',
     slides: [
       ['./work/nlux/01.webp', 2000, 2090],
       ['./work/nlux/02.webp', 1400, 182],
@@ -166,7 +171,9 @@ export const projects: Project[] = [
     approach:
       'Generous white space, editorial photography and a quiet interface that steps back. Filters are precise but stay out of the way; brands get equal, calm presence. The same system scales from iPad in-store to the phone in your pocket.',
     deliverables: ['UX', 'UI', 'Filters', 'Catalogue system'],
-    cover: './work/mercury/cover.webp',
+    cover: './work/mercury/cover-art.webp',
+    logo: './logos/mercury.svg',
+    coverPosition: '50% 45%',
     slides: [
       ['./work/mercury/01.webp', 1480, 2016],
       ['./work/mercury/02.webp', 1480, 2016],

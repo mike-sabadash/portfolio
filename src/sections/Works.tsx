@@ -47,8 +47,12 @@ export default function Works() {
                   src={p.cover}
                   alt={p.title}
                   loading="lazy"
+                  style={p.coverPosition ? { objectPosition: p.coverPosition } : undefined}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.04]"
                 />
+                {p.logo && (
+                  <img src={p.logo} alt={p.client} className="absolute left-6 top-6 md:left-8 md:top-8 h-6 md:h-8 w-auto opacity-90 drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]" />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <span className="absolute left-5 bottom-5 inline-flex items-center gap-2 rounded-full bg-[#d7ff3f] text-[#0e0e0e] px-4 py-2 text-[11px] tracking-[0.18em] uppercase font-medium translate-y-3 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                   View case
