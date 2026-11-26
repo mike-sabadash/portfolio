@@ -1,0 +1,99 @@
+name: Deploy portfolio
+# design.bannermatic.online, same VPS and key as Bannermatic
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: portfolio-production
+  cancel-in-progress: false
+
+env:
+  HOST: 213.182.208.29
+  PORT: 2222
+  DOMAIN: design.bannermatic.online
+  ROOT: /var/www/design.bannermatic.online
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify deploy secret exists
+        run: |
+          if [ -z "${{ secrets.BANNERMATIC_SERVER_SSH_KEY }}" ]; then
+            echo "Add repository secret BANNERMATIC_SERVER_SSH_KEY (same key as Bannermatic)" >&2
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+
+      - name: Check site files
+        run: |
+          test -f index.html
+          for f in $(grep -o 'img2/[a-z0-9-]*\.webp' index.html | sort -u); do test -s "$f" || { echo "missing $f"; exit 1; }; done
+
+      - name: Configure SSH
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.BANNERMATIC_SERVER_SSH_KEY }}" > ~/.ssh/key
+          chmod 600 ~/.ssh/key
+          ssh-keyscan -p $PORT $HOST >> ~/.ssh/known_hosts
+          echo "SSH=ssh -i $HOME/.ssh/key -p $PORT -o IdentitiesOnly=yes root@$HOST" >> $GITHUB_ENV
+
+      - name: Backup and upload
+        run: |
+          $SSH "set -e; mkdir -p $ROOT; rm -rf $ROOT-backup; cp -a $ROOT $ROOT-backup"
+          rsync -az --delete --exclude '.git*' --exclude README.md \
+            -e "ssh -i $HOME/.ssh/key -p $PORT -o IdentitiesOnly=yes" ./ root@$HOST:$ROOT/
+
+      - name: Nginx host and HTTPS certificate
+        run: |
+          $SSH "DOMAIN=$DOMAIN ROOT=$ROOT bash -s" <<'REMOTE'
+          set -e
+          CONF=/etc/nginx/conf.d/$DOMAIN.conf
+          CERT=/etc/letsencrypt/live/$DOMAIN/fullchain.pem
+          rollback(){ rm -f "$CONF"; nginx -t && systemctl reload nginx; exit 1; }
+
+          if [ ! -f "$CERT" ]; then
+            printf 'server {\n  listen 80;\n  listen [::]:80;\n  server_name %s;\n  root %s;\n  location / { try_files $uri $uri/ =404; }\n}\n' "$DOMAIN" "$ROOT" > "$CONF"
+            nginx -t || rollback
+            systemctl reload nginx
+            certbot certonly --webroot -w "$ROOT" -d "$DOMAIN" --non-interactive --agree-tos \
+              -m project.funkers@gmail.com --keep-until-expiring
+          fi
+
+          cat > "$CONF" <<NGINX
+          server {
+            listen 80;
+            listen [::]:80;
+            server_name $DOMAIN;
+            location /.well-known/acme-challenge/ { root $ROOT; }
+            location / { return 301 https://$DOMAIN\$request_uri; }
+          }
+          server {
+            listen 443 ssl;
+            listen [::]:443 ssl;
+            server_name $DOMAIN;
+            ssl_certificate $CERT;
+            ssl_certificate_key /etc/letsencrypt/live/$DOMAIN/privkey.pem;
+            include /etc/letsencrypt/options-ssl-nginx.conf;
+            ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+            root $ROOT;
+            index index.html;
+            location / { try_files \$uri \$uri/ =404; }
+            location ~* \.(webp|png|jpg|svg|woff2?)\$ { expires 30d; add_header Cache-Control "public"; }
+            gzip on;
+            gzip_types text/css application/javascript;
+          }
+          NGINX
+          nginx -t || rollback
+          systemctl reload nginx
+          REMOTE
+
+      - name: Verify
+        run: |
+          curl -fsSI --max-time 30 https://$DOMAIN/
+          curl -fsS --max-time 30 https://$DOMAIN/ | grep -q 'Mike Sabadash'
+          echo PORTFOLIO_OK

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mike Sabadash — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* VOICE: calm, confident, gallery-like; the work talks, the type frames it
+   IDEA: an exhibition catalogue: huge name on the wall, then large framed plates you walk past
+   PICTURE: real case covers from Behance, floating in the hero with mouse parallax, then full-bleed plates
+   COLOUR and TYPE: paper white, near-black ink, one vermilion accent for links; Inter Tight 800 display, Instrument Serif italic for voice
+   LAYOUT: one wide column up to 1440px, giant name, alternating plates, product list, music band, contact footer */
+:root{color-scheme:light;--bg:#f6f5f2;--ink:#111110;--mute:#6d6b66;--line:#d9d6cf;--acc:#ff4a1c;--dark:#111110}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Inter Tight",system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{display:block;max-width:100%}
+.wrap{max-width:1440px;margin:0 auto;padding:0 max(4vw,18px)}
+.serif{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400}
+
+/* nav */
+nav{position:fixed;inset:0 0 auto;z-index:20;mix-blend-mode:difference;color:#fff}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;height:72px;gap:16px}
+nav a{text-decoration:none;font-weight:500;font-size:15px}
+nav .links{display:flex;gap:clamp(14px,3vw,40px);flex-wrap:wrap}
+
+/* hero */
+.hero{min-height:100svh;display:grid;align-content:end;padding-bottom:clamp(28px,5vh,64px);position:relative;overflow:hidden}
+.floats{position:absolute;inset:0;pointer-events:none}
+.float{position:absolute;width:clamp(150px,20vw,320px);border-radius:6px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.45);will-change:transform}
+.float img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.f1{top:13%;left:6%;rotate:-4deg}.f2{top:9%;right:9%;rotate:3deg;width:clamp(170px,23vw,360px)}.f3{top:36%;left:42%;rotate:-1deg;width:clamp(130px,16vw,250px)}
+.intro{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:24px;align-items:end;margin-bottom:clamp(10px,2vh,24px)}
+.intro p{margin:0;font-size:clamp(18px,1.7vw,24px);line-height:1.3;max-width:30ch}
+.intro .meta{justify-self:end;text-align:right;color:var(--mute);font-size:15px}
+h1{position:relative;margin:0;font-weight:800;font-size:clamp(64px,15.4vw,240px);line-height:.82;letter-spacing:-.055em;white-space:nowrap}
+h1 .row{display:block;overflow:hidden;padding-bottom:.04em}
+h1 .row span{display:inline-block;will-change:transform}
+
+/* marquee */
+.marquee{border-block:1px solid var(--line);overflow:hidden;padding:18px 0;white-space:nowrap}
+.track{display:inline-flex;gap:48px;animation:run 38s linear infinite;font-size:clamp(22px,2.6vw,38px)}
+.track span:nth-child(even){color:var(--mute)}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* work */
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:clamp(70px,10vw,140px) 0 clamp(30px,4vw,56px);flex-wrap:wrap}
+h2{margin:0;font-weight:800;font-size:clamp(40px,6vw,92px);line-height:.95;letter-spacing:-.04em}
+.sec-head p{margin:0;color:var(--mute);max-width:38ch}
+.case{display:block;text-decoration:none;padding:clamp(20px,3vw,40px) 0 clamp(60px,8vw,120px)}
+.plate{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:16/10;background:#e9e6df;box-shadow:0 1px 0 rgba(0,0,0,.04),0 40px 80px -50px rgba(0,0,0,.35);will-change:transform}
+.plate img{width:100%;height:100%;object-fit:contain;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.case:hover .plate img{transform:scale(1.012)}
+.cap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(18px,4vw,64px);margin-top:clamp(20px,2.4vw,32px);align-items:start}
+.cap .co{color:var(--mute);font-size:15px;margin-bottom:8px}
+.cap h3{margin:0;font-weight:600;font-size:clamp(28px,3.2vw,48px);line-height:1.02;letter-spacing:-.03em;text-wrap:balance}
+.cap p{margin:0 0 16px;color:#3b3a37;max-width:46ch}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags span{border:1px solid var(--line);border-radius:99px;padding:4px 12px;font-size:14px;color:var(--mute)}
+
+/* cursor */
+.cursor{position:fixed;z-index:30;left:0;top:0;width:96px;height:96px;margin:-48px 0 0 -48px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-weight:600;font-size:15px;pointer-events:none;scale:0;transition:scale .3s}
+.cursor.on{scale:1}
+@media (hover:none){.cursor{display:none}}
+
+/* products */
+.prod{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.prod a{background:var(--bg);padding:clamp(22px,3vw,40px);text-decoration:none;display:grid;gap:14px;min-height:300px;align-content:space-between;transition:background .3s,color .3s}
+.prod a:hover{background:var(--ink);color:var(--bg)}
+.prod a:hover small{color:#a9a69f}
+.prod b{font-weight:800;font-size:clamp(30px,3.2vw,48px);letter-spacing:-.035em;line-height:1}
+.prod small{color:var(--mute);font-size:15px}
+.prod p{margin:0}
+
+/* music */
+.music{background:var(--dark);color:#f6f5f2;margin-top:clamp(70px,10vw,140px);padding:clamp(70px,10vw,150px) 0;overflow:hidden}
+.music .big{font-weight:800;font-size:clamp(54px,11vw,190px);line-height:.85;letter-spacing:-.05em;margin:0 0 clamp(30px,4vw,60px);white-space:nowrap}
+.music .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,48px);border-top:1px solid #34332f;padding-top:28px}
+.music .num{font-weight:800;font-size:clamp(40px,4.6vw,72px);letter-spacing:-.04em;line-height:1}
+.music .grid p{margin:8px 0 0;color:#a9a69f;max-width:32ch}
+
+/* about + footer */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(24px,5vw,80px);padding:clamp(70px,10vw,140px) 0}
+.about .lead{font-size:clamp(26px,3vw,44px);line-height:1.12;letter-spacing:-.02em;margin:0}
+.about ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.about li{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.about li span:last-child{color:var(--mute);text-align:right}
+footer{border-top:1px solid var(--line);padding:clamp(50px,8vw,110px) 0 36px}
+footer .cta{font-weight:800;font-size:clamp(46px,9vw,150px);line-height:.9;letter-spacing:-.05em;text-decoration:none;display:inline-block}
+footer .cta:hover{color:var(--acc)}
+footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:48px;color:var(--mute);font-size:15px}
+footer .row a{text-decoration:none}footer .row a:hover{color:var(--ink)}
+.demo{font-size:13px;color:var(--mute)}
+
+/* reveal */
+.rv{opacity:0;translate:0 40px;transition:opacity 1s cubic-bezier(.2,.7,.2,1),translate 1s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;translate:0 0}
+
+@media (max-width:900px){
+ .cap{grid-template-columns:minmax(0,1fr)}
+ .prod,.music .grid{grid-template-columns:minmax(0,1fr)}
+ .prod a{min-height:200px}
+ .about{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:600px){
+ .intro{grid-template-columns:minmax(0,1fr)}
+ .intro .meta{justify-self:start;text-align:left}
+ .f3{display:none}.f1{top:16%;left:4%}.f2{top:30%;right:4%}
+ nav .links a:nth-child(2){display:none}
+ h1{font-size:21vw}
+}
+@media (prefers-reduced-motion:reduce){
+ .track{animation:none}.rv{opacity:1;translate:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+ <a href="#top">Mike Sabadash</a>
+ <div class="links"><a href="#work">Work</a><a href="#products">Products</a><a href="#music">Music</a><a href="#contact">Contact</a></div>
+</div></nav>
+
+<header class="hero wrap" id="top">
+ <div class="floats">
+  <div class="float f1" data-depth="22"><img src="img2/journey.webp" alt=""></div>
+  <div class="float f2" data-depth="34"><img src="img2/butler.webp" alt=""></div>
+  <div class="float f3" data-depth="14"><img src="img2/prize.webp" alt=""></div>
+ </div>
+ <div class="intro">
+  <p>Product designer and art director. I turn <span class="serif">complicated processes</span> into interfaces people get on the first try.</p>
+  <div class="meta">Senior / Lead Product Designer<br>Moscow · Remote</div>
+ </div>
+ <h1 aria-label="Mike Sabadash"><span class="row"><span>Mike</span></span><span class="row"><span>Sabadash</span></span></h1>
+</header>
+
+<div class="marquee" aria-hidden="true"><div class="track" id="track"></div></div>
+
+<main class="wrap">
+ <section id="work">
+  <div class="sec-head"><h2>Selected<br>work</h2><p>Product design for lottery, property services, retail and gaming. Each case starts from the business process, not the screen.</p></div>
+  <div id="cases"></div>
+ </section>
+
+ <section id="products">
+  <div class="sec-head"><h2>Things I build<br><span class="serif">myself</span></h2><p>Own products, designed and shipped end to end with AI coding agents: from the first sketch to a live deployment.</p></div>
+  <div class="prod rv">
+   <a href="https://bannermatic.online"><small>AdTech · Automation</small><b>Bannermatic</b><p>Adapts one master layout into a whole family of banner formats, recomposing the layout for each aspect ratio instead of scaling it.</p><small>bannermatic.online ↗</small></a>
+   <a href="https://riffkiller.fun"><small>MusicTech · EdTech</small><b>Riff Killer</b><p>Learn guitar riffs as a structure: phrases, atoms and organisms, with synced audio, tabs and fretboard.</p><small>riffkiller.fun ↗</small></a>
+   <a href="https://rechord.online"><small>Tools for musicians</small><b>Rechord</b><p>Chord builder, tab editor and a vertical reels editor for musicians who teach on social media.</p><small>rechord.online ↗</small></a>
+  </div>
+ </section>
+</main>
+
+<section class="music" id="music">
+ <div class="wrap">
+  <p class="big rv" id="musicBig">Also, music.</p>
+  <div class="grid rv">
+   <div><div class="num">INDIKA</div><p>Worked on the soundtrack of the video game, released by Milan Records, part of Sony Music.</p></div>
+   <div><div class="num">200K+</div><p>Followers across my own music channels, built from scratch with short guitar videos for an international audience.</p></div>
+   <div><div class="num">Studio</div><p>My own recording space in Moscow. Rock, blues and cinematic music.</p></div>
+  </div>
+ </div>
+</section>
+
+<div class="wrap">
+ <section class="about" id="about">
+  <p class="lead rv">Years of art direction in advertising, then product design for complex systems. I care about <span class="serif">both</span>: how it looks and why it works.</p>
+  <ul class="rv">
+   <li><span>National Lottery</span><span>Product Designer · now</span></li>
+   <li><span>Butler, digital property management</span><span>Lead Product Designer</span></li>
+   <li><span>TSUM, internal products</span><span>Product Designer</span></li>
+   <li><span>Advertising agencies</span><span>Art Director</span></li>
+  </ul>
+ </section>
+
+ <footer id="contact">
+  <a class="cta" href="https://www.behance.net/mikesabad">Let's talk ↗</a>
+  <div class="row">
+   <span>© Mike Sabadash</span>
+   <a href="https://www.behance.net/mikesabad">Behance</a>
+   <span class="demo">Concept demo. Case images from my Behance.</span>
+  </div>
+ </footer>
+</div>
+
+<div class="cursor" id="cursor">View</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+{
+const B='https://www.behance.net/gallery/';
+const cases=[
+ {co:'National Lottery · Prize claim',t:'From "you\'ve won" to prize in hand',d:'An end-to-end digital route for claiming prizes: identity check, documents, e-signature, status tracking and every error state in between.',tags:['Service design','Flows','Web + Mobile'],img:'img2/prize.webp',u:B+'258632931'},
+ {co:'National Lottery · Ticket check',t:'From a paper ticket to one digital journey',d:'One entry point to check, link and claim any lottery ticket. QR scan or manual input, with fewer decisions before the result.',tags:['Product design','UX','Desktop · Mobile · App'],img:'img2/journey.webp',u:B+'258625657'},
+ {co:'Butler',t:'Digital property management',d:'Resident app, contractor workspace and ticket system for a B2B service that automates housing operations.',tags:['B2B','Lead designer','Web + Mobile'],img:'img2/butler.webp',u:B+'219214891'},
+ {co:'Mercury',t:'Luxury jewelry, made browsable',d:'Tablet and phone catalogue for a high-end jewelry retailer: restraint, air and the product first.',tags:['E-commerce','UI','iPad · iOS'],img:'img2/mercury.webp',u:B+'140422913'},
+ {co:'Online casino',t:'VIP club and loyalty levels',d:'Status, progression and rewards for an iGaming VIP programme, on desktop and mobile.',tags:['iGaming','Gamification','Web'],img:'img2/vip.webp',u:B+'229310321'},
+ {co:'RaceSport',t:'Equestrian sport store',d:'Desktop and mobile e-commerce for a chain of equestrian stores: catalogue, product page and navigation by rider, horse and stable.',tags:['E-commerce','Web + Mobile'],img:'img2/race.webp',u:B+'175138525'}
+];
+document.getElementById('cases').innerHTML=cases.map(c=>`<a class="case" href="${c.u}"><div class="plate"><img src="${c.img}" alt="${c.t}" loading="lazy"></div><div class="cap rv"><div><div class="co">${c.co}</div><h3>${c.t}</h3></div><div><p>${c.d}</p><div class="tags">${c.tags.map(x=>`<span>${x}</span>`).join('')}</div></div></div></a>`).join('');
+
+const words=['Product design','Art direction','Gamification','Service design','AI prototyping','Motion','Music production'];
+const once=words.map(w=>`<span>${w}</span><span class="serif">✦</span>`).join('');
+document.getElementById('track').innerHTML=once+once;
+
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+if(!reduce && window.gsap){
+ gsap.registerPlugin(ScrollTrigger);
+ if(window.Lenis){const lenis=new Lenis({lerp:.09});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}
+
+ /* hero name rises in */
+ gsap.from('h1 .row span',{yPercent:110,duration:1.3,ease:'expo.out',stagger:.12,delay:.15});
+ gsap.from('.float',{opacity:0,y:60,scale:.9,duration:1.4,ease:'expo.out',stagger:.1,delay:.35});
+ gsap.from('.intro>*',{opacity:0,y:20,duration:1,ease:'power3.out',stagger:.08,delay:.6});
+
+ /* hero scroll: name drifts, floats fly apart */
+ gsap.to('h1',{yPercent:-18,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+ gsap.utils.toArray('.float').forEach((f,i)=>gsap.to(f,{y:-(i+1)*120,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}}));
+
+ /* plates: rise in, then drift as a whole frame (image never cropped) */
+ gsap.utils.toArray('.plate').forEach(p=>{
+  gsap.from(p,{opacity:0,y:80,scale:.97,duration:1.4,ease:'expo.out',scrollTrigger:{trigger:p,start:'top 88%'}});
+  gsap.fromTo(p,{yPercent:3},{yPercent:-3,ease:'none',scrollTrigger:{trigger:p.parentElement,start:'top bottom',end:'bottom top',scrub:true}});
+ });
+
+ /* music headline slides sideways */
+ gsap.fromTo('#musicBig',{xPercent:12},{xPercent:-8,ease:'none',scrollTrigger:{trigger:'.music',start:'top bottom',end:'bottom top',scrub:true}});
+
+ /* mouse parallax on hero floats */
+ const fl=[...document.querySelectorAll('.float')];
+ addEventListener('pointermove',e=>{const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;fl.forEach(f=>{const d=+f.dataset.depth;gsap.to(f,{x:-x*d*2,rotateY:x*6,rotateX:-y*6,duration:1.2,ease:'power3.out',overwrite:'auto'})})});
+} else {
+ /* static */
+}
+
+/* view cursor over cases */
+const cur=document.getElementById('cursor');
+addEventListener('pointermove',e=>{cur.style.transform=`translate(${e.clientX}px,${e.clientY}px)`});
+document.querySelectorAll('.case').forEach(c=>{c.addEventListener('pointerenter',()=>cur.classList.add('on'));c.addEventListener('pointerleave',()=>cur.classList.remove('on'))});
+}
+</script>
+</body>
+</html>
