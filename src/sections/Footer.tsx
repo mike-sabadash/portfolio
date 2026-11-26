@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { scrollToTop } from '../lib/scroll'
 
-const EMAIL = 'project.funkers@gmail.com'
+const EMAIL = 'lostvoxmusic@gmail.com'
 const TG = 'https://t.me/nobodycaresmusic'
 
 function MagneticButton() {
