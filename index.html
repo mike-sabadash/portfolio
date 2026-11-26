@@ -31,12 +31,12 @@ nav .links{display:flex;gap:clamp(14px,3vw,40px);flex-wrap:wrap}
 /* hero */
 .hero{min-height:100svh;display:grid;align-content:end;padding-bottom:clamp(28px,5vh,64px);position:relative;overflow:hidden}
 .floats{position:absolute;inset:0;pointer-events:none}
-.float{position:absolute;width:clamp(150px,20vw,320px);border-radius:6px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.45);will-change:transform}
+.float{position:absolute;width:clamp(130px,min(19vw,30vh),330px);border-radius:6px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.45);will-change:transform}
 .float img{width:100%;aspect-ratio:16/10;object-fit:cover}
-.f1{top:10%;left:30%;rotate:-4deg}.f2{top:9%;right:9%;rotate:3deg;width:clamp(170px,23vw,360px)}.f3{top:30%;left:58%;rotate:-1deg;width:clamp(130px,16vw,250px)}
-.intro{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:24px;align-items:end;margin-bottom:clamp(10px,2vh,24px)}
+.f1{top:13%;right:31%;rotate:-4deg}.f2{top:10%;right:4%;rotate:3deg;width:clamp(150px,min(23vw,36vh),380px)}.f3{top:31%;right:18%;rotate:-1deg;width:clamp(120px,min(15vw,24vh),250px)}
+.intro{position:relative;z-index:2;display:block;margin-bottom:clamp(10px,2vh,24px)}
 .intro p{margin:0;font-size:clamp(18px,1.7vw,24px);line-height:1.3;max-width:30ch}
-.intro .meta{justify-self:end;text-align:right;color:var(--mute);font-size:15px}
+.intro .meta{display:inline-block;margin-top:12px;color:var(--mute);font-size:15px}
 h1{position:relative;margin:0;font-weight:800;font-size:clamp(64px,15.4vw,240px);line-height:.82;letter-spacing:-.055em;white-space:nowrap}
 h1 .row{display:block;overflow:hidden;padding-bottom:.04em}
 h1 .row span{display:inline-block;will-change:transform}
@@ -107,9 +107,7 @@ footer .row a{text-decoration:none}footer .row a:hover{color:var(--ink)}
  .about{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:600px){
- .intro{grid-template-columns:minmax(0,1fr)}
- .intro .meta{justify-self:start;text-align:left}
- .f3{display:none}.f1{top:16%;left:4%}.f2{top:30%;right:4%}
+ .f3{display:none}.f1{top:12%;right:44%}.f2{top:9%;right:4%}
  nav .links a:nth-child(2){display:none}
  h1{font-size:21vw}
 }
@@ -133,7 +131,7 @@ footer .row a{text-decoration:none}footer .row a:hover{color:var(--ink)}
  </div>
  <div class="intro">
   <p>Product designer and art director. I turn <span class="serif">complicated processes</span> into interfaces people get on the first try.</p>
-  <div class="meta">Senior / Lead Product Designer<br>Moscow · Remote</div>
+  <div class="meta">Senior / Lead Product Designer · Moscow · Remote</div>
  </div>
  <h1 aria-label="Mike Sabadash"><span class="row"><span>Mike</span></span><span class="row"><span>Sabadash</span></span></h1>
 </header>
