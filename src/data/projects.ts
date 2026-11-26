@@ -105,9 +105,7 @@ export const projects: Project[] = [
     approach:
       'I designed the core purchase and profile flows and the visual language that holds them together: colour proportions, type, 3D key visuals and reusable components. Product brands keep their identity, while every screen follows the same calm structure, so a new lottery drops in without redesign.',
     deliverables: ['Purchase flow', 'Profile & payments', 'Components', 'Key visuals', 'Brandbook'],
-    cover: './work/nlux/cover-art.webp',
-    logo: './logos/national-lottery.svg',
-    coverPosition: '50% 60%',
+    cover: './work/nlux/cover.webp',
     slides: [
       ['./work/nlux/01.webp', 2000, 2090],
       ['./work/nlux/02.webp', 1400, 182],
