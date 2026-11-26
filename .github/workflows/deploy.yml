@@ -29,10 +29,17 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - name: Check site files
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Build
         run: |
-          test -f index.html
-          for f in $(grep -o 'img2/[a-z0-9-]*\.webp' index.html | sort -u); do test -s "$f" || { echo "missing $f"; exit 1; }; done
+          npm ci
+          npm run build
+          test -f dist/index.html
+          for f in $(grep -oh "\./\(work\|music\|logos\)/[a-z0-9.-]*" src -r | sed 's#^\./##' | sort -u); do test -s "dist/$f" || { echo "missing $f"; exit 1; }; done
 
       - name: Configure SSH
         run: |
@@ -45,8 +52,8 @@ jobs:
       - name: Backup and upload
         run: |
           $SSH "set -e; mkdir -p $ROOT; rm -rf $ROOT-backup; cp -a $ROOT $ROOT-backup"
-          rsync -az --delete --exclude '.git*' --exclude README.md \
-            -e "ssh -i $HOME/.ssh/key -p $PORT -o IdentitiesOnly=yes" ./ root@$HOST:$ROOT/
+          rsync -az --delete \
+            -e "ssh -i $HOME/.ssh/key -p $PORT -o IdentitiesOnly=yes" dist/ root@$HOST:$ROOT/
 
       - name: Nginx host and HTTPS certificate
         run: |

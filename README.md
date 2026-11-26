@@ -1,9 +1,11 @@
 # Mike Sabadash: portfolio
 
-Static site, no build step. Live at https://design.bannermatic.online
+Personal portfolio. React + Vite + Tailwind + Framer Motion, smooth scroll with Lenis.
+Live at https://design.bannermatic.online
 
-- `index.html`: the whole page (GSAP + Lenis from CDN)
-- `img2/`: case images, 1600x1000 webp, from behance.net/mikesabad
-- `.github/workflows/deploy.yml`: every push to `main` deploys to the VPS
+- `src/sections`: home page sections (Hero, About, Work, Disciplines, Built by me, Music, Experience)
+- `src/data/projects.ts`: case studies
+- `public/work`: case images (from behance.net/mikesabad), `public/music`: INDIKA visuals, `public/logos`: client logos
+- `.github/workflows/deploy.yml`: every push to `main` builds and deploys to the VPS (needs `BANNERMATIC_SERVER_SSH_KEY`)
 
-Deploy needs one repository secret, `BANNERMATIC_SERVER_SSH_KEY`: the same private key the Bannermatic deploy uses.
+Local: `npm ci && npm run dev`
