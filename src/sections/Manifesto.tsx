@@ -4,11 +4,18 @@ import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
 const TEXT =
   'Twenty years between advertising, products and music taught me one thing: complexity is a design problem. I take messy processes, from prize claims and CRMs to banner production and guitar riffs, and turn them into systems people understand on the first try. Then I make them look like they matter.'
 
-const stats: [string, string][] = [
+const stats: [string, React.ReactNode][] = [
   ['20+', 'Years in design, from art direction to product'],
   ['9', 'Products and prototypes I built and shipped with AI agents'],
   ['200K+', 'Followers on my own music channels'],
-  ['1', 'Game soundtrack: INDIKA, released by Milan Records / Sony Music'],
+  [
+    '30+',
+    <>
+      Sound design and music releases.
+      <br />
+      Incl. game soundtrack <span className="text-[#d7ff3f]">INDIKA</span>, released by Milan Records / Sony Music
+    </>,
+  ],
 ]
 
 function Word({ word, progress, range }: { word: string; progress: MotionValue<number>; range: [number, number] }) {
@@ -28,8 +35,8 @@ export default function Manifesto() {
         {words.map((word, i) => <Word key={i} word={word} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} />)}
       </p>
       <div className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10">
-        {stats.map(([num, label]) => (
-          <div key={label} className="bg-[#0e0e0e] py-10 md:py-14 px-6">
+        {stats.map(([num, label], i) => (
+          <div key={i} className="bg-[#0e0e0e] py-10 md:py-14 px-6">
             <div className="font-display font-medium text-5xl md:text-6xl text-[#d7ff3f]">{num}</div>
             <div className="mt-3 text-[11px] leading-relaxed tracking-[0.16em] uppercase text-[#8a877f] max-w-[220px]">{label}</div>
           </div>
