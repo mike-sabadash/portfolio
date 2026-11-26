@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router'
-import { motion, useMotionValue, useSpring, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { projects } from '../data/projects'
 
 export function Shot({ src, alt = '', className }: { src: string; alt?: string; className?: string }) {
@@ -12,21 +12,6 @@ export function Shot({ src, alt = '', className }: { src: string; alt?: string; 
 }
 
 export default function Works() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [active, setActive] = useState<number | null>(null)
-
-  const mx = useMotionValue(0)
-  const my = useMotionValue(0)
-  const sx = useSpring(mx, { stiffness: 180, damping: 24, mass: 0.5 })
-  const sy = useSpring(my, { stiffness: 180, damping: 24, mass: 0.5 })
-
-  const onMove = (e: React.MouseEvent) => {
-    const rect = containerRef.current?.getBoundingClientRect()
-    if (!rect) return
-    mx.set(e.clientX - rect.left)
-    my.set(e.clientY - rect.top)
-  }
-
   const headerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: headerRef, offset: ['start end', 'end start'] })
   const hx = useTransform(scrollYProgress, [0, 1], ['4%', '-14%'])
@@ -42,63 +27,50 @@ export default function Works() {
         </motion.h2>
       </div>
 
-      <div className="px-6 md:px-10 flex items-baseline justify-between mb-6">
+      <div className="px-6 md:px-10 flex items-baseline justify-between mb-8">
         <span className="text-[11px] tracking-[0.25em] uppercase text-[#8a877f]">02 / Work</span>
         <span className="text-[11px] tracking-[0.25em] uppercase text-[#8a877f]">Product · Service · Art direction</span>
       </div>
 
-      <div ref={containerRef} className="relative" onMouseMove={onMove} onMouseLeave={() => setActive(null)}>
-        <AnimatePresence>
-          {active !== null && (
-            <motion.div
-              className="hidden md:block absolute z-20 w-[30vw] aspect-[16/10] pointer-events-none"
-              style={{ left: sx, top: sy, x: '-50%', y: '-50%' }}
-              initial={{ scale: 0.55, opacity: 0, rotate: -4 }}
-              animate={{ scale: 1, opacity: 1, rotate: 2 }}
-              exit={{ scale: 0.55, opacity: 0, rotate: 4 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Shot src={projects[active].cover} className="w-full h-full rounded-md shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
+      <div className="px-6 md:px-10 grid md:grid-cols-2 gap-x-6 md:gap-x-8 gap-y-12 md:gap-y-16">
         {projects.map((p, i) => (
-          <Link
+          <motion.div
             key={p.slug}
-            to={`/work/${p.slug}`}
-            data-cursor="View"
-            onMouseEnter={() => setActive(i)}
-            className="group block border-t border-white/10 last:border-b px-6 md:px-10"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.8, delay: (i % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="md:hidden pt-6">
-              <Shot src={p.cover} alt={p.title} className="w-full aspect-[16/10] rounded-md" />
-            </div>
-            <div className="relative flex items-center justify-between py-7 md:py-10">
-              <div className="flex items-baseline gap-5 md:gap-10">
-                <span className="text-xs text-[#8a877f] tabular-nums">0{i + 1}</span>
-                <div>
-                  <h3 className="font-display font-medium text-3xl md:text-6xl leading-none transition-all duration-500 md:group-hover:translate-x-6 md:group-hover:text-[#d7ff3f]">
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 text-[12px] text-[#8a877f] md:transition-transform md:duration-500 md:group-hover:translate-x-6">{p.client}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-6 md:gap-14 shrink-0">
-                <span className="hidden lg:block text-[12px] tracking-[0.15em] uppercase text-[#8a877f]">{p.category}</span>
-                {p.year && <span className="hidden sm:block text-[12px] text-[#8a877f] tabular-nums">{p.year}</span>}
-                <span className="hidden md:flex w-10 h-10 rounded-full border border-white/15 items-center justify-center transition-all duration-500 group-hover:bg-[#d7ff3f] group-hover:border-[#d7ff3f]">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="stroke-[#eae7e0] group-hover:stroke-[#0e0e0e] transition-colors duration-500" strokeWidth="1.5">
-                    <path d="M7 17L17 7M17 7H8M17 7v9" />
-                  </svg>
+            <Link to={`/work/${p.slug}`} data-cursor="View" className="group block">
+              <div className="relative overflow-hidden rounded-lg bg-[#161616] aspect-[808/632]">
+                <img
+                  src={p.cover}
+                  alt={p.title}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.04]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <span className="absolute left-5 bottom-5 inline-flex items-center gap-2 rounded-full bg-[#d7ff3f] text-[#0e0e0e] px-4 py-2 text-[11px] tracking-[0.18em] uppercase font-medium translate-y-3 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                  View case
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M17 7H8M17 7v9" /></svg>
                 </span>
               </div>
-            </div>
-          </Link>
+              <div className="mt-5 flex items-start justify-between gap-6">
+                <div>
+                  <h3 className="font-display font-medium text-2xl md:text-[2rem] leading-tight transition-colors duration-500 group-hover:text-[#d7ff3f]">{p.title}</h3>
+                  <p className="mt-1.5 text-[13px] text-[#8a877f]">{p.client}</p>
+                </div>
+                <div className="text-right shrink-0 pt-1.5">
+                  <span className="block text-[11px] tracking-[0.15em] uppercase text-[#8a877f]">{p.category}</span>
+                  {p.year && <span className="block mt-1 text-[11px] text-[#8a877f]/70 tabular-nums">{p.year}</span>}
+                </div>
+              </div>
+            </Link>
+          </motion.div>
         ))}
       </div>
 
-      <div className="px-6 md:px-10 mt-12 flex justify-center">
+      <div className="px-6 md:px-10 mt-16 flex justify-center">
         <a href="https://www.behance.net/mikesabad" target="_blank" rel="noopener noreferrer" data-cursor className="text-[11px] tracking-[0.25em] uppercase text-[#8a877f] hover:text-[#d7ff3f] transition-colors">
           More cases on Behance ↗
         </a>

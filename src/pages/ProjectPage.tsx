@@ -4,26 +4,6 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { projects } from '../data/projects'
 import { Shot } from '../sections/Works'
 
-function ParallaxShot({ src, alt, className }: { src: string; alt: string; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], ['-3%', '3%'])
-  const scale = 1.06
-  return (
-    <div ref={ref} className={`relative overflow-hidden bg-[#161616] ${className ?? ''}`}>
-      <motion.img src={src} alt={alt} loading="lazy" style={{ y, scale }} className="absolute inset-0 w-full h-full object-cover" />
-    </div>
-  )
-}
-
-function Stage({ src, alt, className, wide }: { src: string; alt: string; className?: string; wide?: boolean }) {
-  return (
-    <div className={`group relative overflow-hidden rounded-md bg-[#151515] ring-1 ring-white/5 ${className ?? ''}`}>
-      <img src={src} alt={alt} loading="lazy" className={`absolute inset-0 m-auto max-w-[92%] max-h-[88%] ${wide ? 'w-auto h-auto' : 'w-auto h-auto'} object-contain rounded-[3px] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.9)] transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]`} />
-    </div>
-  )
-}
-
 function Reveal({ children, delay = 0, className }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
     <motion.div initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }} className={className}>
@@ -52,12 +32,9 @@ export default function ProjectPage() {
     )
   }
 
-  const pairs: string[][] = []
-  for (let i = 0; i < project.gallery.length; i += 2) pairs.push(project.gallery.slice(i, i + 2))
-
   return (
     <div className="grain bg-[#0e0e0e] text-[#eae7e0] min-h-screen">
-      <section ref={heroRef} className="relative min-h-[78vh] flex flex-col justify-end px-6 md:px-10 pt-32 pb-10 overflow-hidden">
+      <section ref={heroRef} className="relative flex flex-col justify-end px-6 md:px-10 pt-36 md:pt-44 pb-10 overflow-hidden">
         <div className="absolute top-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-[#d7ff3f] opacity-[0.04] blur-[130px] pointer-events-none" />
         <motion.div style={{ y: heroY, opacity: heroOpacity }}>
           <motion.div className="flex items-center gap-3 text-[11px] tracking-[0.25em] uppercase text-[#8a877f] mb-8" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
@@ -72,11 +49,7 @@ export default function ProjectPage() {
         </motion.div>
       </section>
 
-      <motion.section className="px-6 md:px-10" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}>
-        <ParallaxShot src={project.cover} alt={project.title} className="w-full aspect-[16/10] max-h-[86vh] rounded-md" />
-      </motion.section>
-
-      <section className="px-6 md:px-10 py-24 md:py-36">
+      <section className="px-6 md:px-10 pt-10 pb-20 md:pt-14 md:pb-28">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8">
           <div className="lg:col-span-7">
             <Reveal><p className="text-[11px] tracking-[0.25em] uppercase text-[#8a877f] mb-8">The challenge</p></Reveal>
@@ -97,18 +70,21 @@ export default function ProjectPage() {
         </div>
       </section>
 
-      <section className="px-6 md:px-10 space-y-6 md:space-y-8">
-        {pairs.map((row, ri) =>
-          row.length === 2 ? (
-            <div key={ri} className="grid md:grid-cols-2 gap-6 md:gap-8">
-              {row.map((src, i) => (
-                <Reveal key={src} delay={i * 0.08}><Stage src={src} alt={`${project.title} detail`} className={`aspect-[16/10] ${i === 1 ? 'md:mt-20' : ''}`} /></Reveal>
-              ))}
-            </div>
-          ) : (
-            <Reveal key={ri}><Stage src={row[0]} alt={`${project.title} detail`} className="aspect-[16/9] md:aspect-[21/9]" wide /></Reveal>
-          )
-        )}
+      <section className="px-0 md:px-10">
+        <div className="mx-auto max-w-[1400px] md:rounded-lg overflow-hidden bg-[#161616]">
+          {project.slides.map(([src, w, h], i) => (
+            <img
+              key={src}
+              src={src}
+              width={w}
+              height={h}
+              alt={`${project.title}, slide ${i + 1}`}
+              loading={i < 2 ? 'eager' : 'lazy'}
+              decoding="async"
+              className="block w-full h-auto"
+            />
+          ))}
+        </div>
       </section>
 
       <section className="px-6 md:px-10 py-24 md:py-36">
@@ -121,7 +97,7 @@ export default function ProjectPage() {
             <Reveal delay={0.1}>
               <blockquote className="border-l-2 border-[#d7ff3f] pl-6 md:pl-10">
                 <p className="font-display font-medium text-2xl md:text-4xl leading-[1.25]">“{project.principle}”</p>
-                <footer className="mt-6 text-[11px] tracking-[0.2em] uppercase text-[#8a877f]">Design principle behind this case</footer>
+                <footer className="mt-6 text-[11px] tracking-[0.2em] uppercase text-[#8a877f]">The idea behind it</footer>
               </blockquote>
             </Reveal>
           </div>

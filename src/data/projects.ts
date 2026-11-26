@@ -11,7 +11,8 @@ export interface Project {
   approach: string
   deliverables: string[]
   cover: string
-  gallery: string[]
+  /** Behance-style full-width slides: [src, width, height] */
+  slides: [string, number, number][]
   principle: string
 }
 
@@ -30,8 +31,27 @@ export const projects: Project[] = [
     approach:
       'I mapped every scenario before drawing a single screen, then collapsed the complexity into a few predictable steps. Identity checks live in one modal. Personal data is pre-filled and only asks for what is missing. Every error, pending and edge state has its own designed screen, so the winner always knows where they are and what happens next.',
     deliverables: ['Service map', 'User flows', 'Edge states', 'UI', 'Handoff'],
-    cover: './work/prize-cover.webp',
-    gallery: ['./work/prize-1.webp', './work/prize-2.webp', './work/prize-3.webp'],
+    cover: './work/prize/cover.webp',
+    slides: [
+      ['./work/prize/01.webp', 2000, 1875],
+      ['./work/prize/02.webp', 2000, 1016],
+      ['./work/prize/03.webp', 2000, 1187],
+      ['./work/prize/04.webp', 2000, 1374],
+      ['./work/prize/05.webp', 2000, 1903],
+      ['./work/prize/06.webp', 2000, 1037],
+      ['./work/prize/07.webp', 2000, 1839],
+      ['./work/prize/08.webp', 2000, 1173],
+      ['./work/prize/09.webp', 2000, 1811],
+      ['./work/prize/10.webp', 2000, 1256],
+      ['./work/prize/11.webp', 2000, 2436],
+      ['./work/prize/12.webp', 2000, 1778],
+      ['./work/prize/13.webp', 2000, 1372],
+      ['./work/prize/14.webp', 2000, 2109],
+      ['./work/prize/15.webp', 2000, 1545],
+      ['./work/prize/16.webp', 2000, 2341],
+      ['./work/prize/17.webp', 2000, 1250],
+      ['./work/prize/18.webp', 2000, 1611],
+    ],
     principle: 'The rules made sense to lawyers. My job was to make them make sense to winners.',
   },
   {
@@ -48,9 +68,48 @@ export const projects: Project[] = [
     approach:
       'One entry point for every ticket: scan the QR code or type the number, and the system figures out the rest. A single result card adapts to the ticket type, its status and the action available right now, from “not a winner” to “bigger win, here is how to get paid”.',
     deliverables: ['Product architecture', 'Unified flow', 'Result card system', 'UI', 'Prototype'],
-    cover: './work/journey-cover.webp',
-    gallery: ['./work/journey-1.webp', './work/journey-2.webp', './work/journey-3.webp'],
+    cover: './work/journey/cover.webp',
+    slides: [
+      ['./work/journey/01.webp', 2000, 2153],
+      ['./work/journey/02.webp', 2000, 1202],
+      ['./work/journey/03.webp', 2000, 1486],
+      ['./work/journey/04.webp', 2000, 1532],
+      ['./work/journey/05.webp', 2000, 1687],
+      ['./work/journey/06.webp', 2000, 1655],
+      ['./work/journey/07.webp', 2000, 2263],
+      ['./work/journey/08.webp', 2000, 2646],
+      ['./work/journey/09.webp', 2000, 1266],
+      ['./work/journey/10.webp', 2000, 2072],
+      ['./work/journey/11.webp', 2000, 2766],
+      ['./work/journey/12.webp', 2000, 2139],
+      ['./work/journey/13.webp', 2000, 1732],
+      ['./work/journey/14.webp', 2000, 1451],
+      ['./work/journey/15.webp', 2000, 2979],
+    ],
     principle: 'The player shouldn’t have to understand our product catalogue to find out if they won.',
+  },
+  {
+    slug: 'nl-uxui',
+    title: 'National Lottery App',
+    category: 'UX/UI · Brand system',
+    year: '2026',
+    client: 'National Lottery',
+    role: 'Product Designer',
+    platform: 'iOS · Android · Web',
+    intro: 'The everyday side of the lottery: buying tickets, managing draws, profile and payments, built on one bright, recognisable visual language.',
+    challenge:
+      'Many lottery products, each with its own look and rules, had to live inside one app without turning it into a noisy catalogue. Buying a ticket, picking numbers, paying and coming back for results needed to feel quick and familiar every time.',
+    approach:
+      'I designed the core purchase and profile flows and the visual language that holds them together: colour proportions, type, 3D key visuals and reusable components. Product brands keep their identity, while every screen follows the same calm structure, so a new lottery drops in without redesign.',
+    deliverables: ['Purchase flow', 'Profile & payments', 'Components', 'Key visuals', 'Brandbook'],
+    cover: './work/nlux/cover.webp',
+    slides: [
+      ['./work/nlux/01.webp', 2000, 2090],
+      ['./work/nlux/02.webp', 1400, 182],
+      ['./work/nlux/03.webp', 2000, 4906],
+      ['./work/nlux/04.webp', 2000, 4867],
+    ],
+    principle: 'Bright on the outside, predictable on the inside.',
   },
   {
     slug: 'butler',
@@ -66,27 +125,32 @@ export const projects: Project[] = [
     approach:
       'I led product design across the resident app, the contractor app and the ticket system. Intercom with video, home controls and service requests for residents. A task feed, routes and request statuses for contractors. Both sides speak the same visual language, so a request looks and behaves the same wherever it travels.',
     deliverables: ['Resident app', 'Contractor app', 'Ticket system', 'UI kit', 'Prototypes'],
-    cover: './work/butler-cover.webp',
-    gallery: ['./work/butler-1.webp', './work/butler-3.webp'],
+    cover: './work/butler/cover.webp',
+    slides: [
+      ['./work/butler/01.webp', 2000, 1125],
+      ['./work/butler/02.webp', 2000, 1380],
+      ['./work/butler/03.webp', 2000, 993],
+      ['./work/butler/04.webp', 2000, 1776],
+      ['./work/butler/05.webp', 2000, 1646],
+      ['./work/butler/06.webp', 2000, 466],
+      ['./work/butler/07.webp', 2000, 1691],
+      ['./work/butler/08.webp', 2000, 1776],
+      ['./work/butler/09.webp', 2000, 1776],
+      ['./work/butler/10.webp', 2000, 1380],
+      ['./work/butler/11.webp', 2000, 466],
+      ['./work/butler/12.webp', 2000, 5290],
+      ['./work/butler/13.webp', 2000, 1125],
+      ['./work/butler/14.webp', 2000, 1125],
+      ['./work/butler/15.webp', 2000, 1125],
+      ['./work/butler/16.webp', 2000, 1125],
+      ['./work/butler/17.webp', 2000, 1125],
+      ['./work/butler/18.webp', 2000, 1125],
+      ['./work/butler/19.webp', 2000, 1127],
+      ['./work/butler/20.webp', 2000, 1126],
+      ['./work/butler/21.webp', 2000, 1125],
+      ['./work/butler/22.webp', 2000, 1125],
+    ],
     principle: 'Two audiences, one request. It has to feel the same on both ends.',
-  },
-  {
-    slug: 'belt-impex',
-    title: 'Belt Impex',
-    category: 'Art Direction / Web',
-    year: '2026',
-    client: 'Belt Impex, industrial supplier',
-    role: 'Art Director, Designer',
-    platform: 'Web · Interactive prototype',
-    intro: 'Conveyor belts, chains and bearings, presented with the confidence of a premium brand.',
-    challenge:
-      'A serious industrial supplier with 16 product directions and a website that looked like a price list. The brief: make a hard, “unglamorous” B2B business look as strong as it actually is, without losing the catalogue logic buyers rely on.',
-    approach:
-      'I built a visual language from the logo geometry: gears, belts and engineering drawings, technical illustrations with consistent line weight and isometry, real warehouse photography and big confident numbers. Three concepts went from static layouts to animated HTML prototypes with parallax, hover states and scroll motion.',
-    deliverables: ['Art direction', 'Visual concept', 'Web design', 'Technical illustration', 'Animated prototype'],
-    cover: './work/belt-1.webp',
-    gallery: ['./work/belt-2.webp', './work/belt-3.webp', './work/belt-4.webp'],
-    principle: 'B2B doesn’t have to look boring. It has to look trustworthy, and that can be beautiful.',
   },
   {
     slug: 'mercury',
@@ -102,8 +166,12 @@ export const projects: Project[] = [
     approach:
       'Generous white space, editorial photography and a quiet interface that steps back. Filters are precise but stay out of the way; brands get equal, calm presence. The same system scales from iPad in-store to the phone in your pocket.',
     deliverables: ['UX', 'UI', 'Filters', 'Catalogue system'],
-    cover: './work/mercury-cover.webp',
-    gallery: ['./work/mercury-1.webp', './work/mercury-3.webp'],
+    cover: './work/mercury/cover.webp',
+    slides: [
+      ['./work/mercury/01.webp', 1480, 2016],
+      ['./work/mercury/02.webp', 1480, 2016],
+      ['./work/mercury/03.webp', 1480, 2016],
+    ],
     principle: 'In luxury, the interface should whisper.',
   },
   {
@@ -120,8 +188,10 @@ export const projects: Project[] = [
     approach:
       'A clear ladder of levels with visible perks, progress and a dark, premium visual language. Comparisons are scannable at a glance, and the next reward is always in view.',
     deliverables: ['Loyalty mechanics', 'UX', 'UI', 'Visual style'],
-    cover: './work/vip-cover.webp',
-    gallery: ['./work/vip-2.webp'],
+    cover: './work/vip/cover.webp',
+    slides: [
+      ['./work/vip/01.webp', 2000, 3798],
+    ],
     principle: 'Motivation is a layout problem: show the next step, not the whole staircase.',
   },
 ]
